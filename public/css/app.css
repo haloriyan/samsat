@@ -1,0 +1,31 @@
+body {
+	background-color: #fff;
+}
+a { color: #444; }
+header {
+	position: fixed;
+	top: 0px;left: 0px;right: 0px;
+	box-shadow: 1px 1px 5px 1px #ddd;
+	background-color: #fff;
+	z-index: 2;
+	line-height: 65px;
+}
+.container {
+	position: absolute;
+	top: 50px;left: 5%;right: 5%;
+}
+
+.navigation {
+	position: fixed;
+	bottom: 20px;left: 5%;right: 5%;
+	border-top: 1px solid #ddd;
+	background-color: #fff;
+	line-height: 50px;
+	text-align: center;
+	border-radius: 900px;
+	/* box-shadow: 1px 1px 10px 1px #ddd; */
+	border: 1px solid #ddd;
+}
+.navigation i.active {
+	color: #3498db;
+}

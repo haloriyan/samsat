@@ -1,0 +1,43 @@
+body {
+    background-color: #ecf0f1;
+}
+nav {
+    position: fixed;
+    top: 0px;left: 0px;bottom: 0px;
+    width: 25%;
+    background-color: #fff;
+}
+nav .profile {
+    border-bottom: 1px solid #ddd;
+}
+nav .menu {
+    margin-top: 35px;
+}
+nav .menu a { color: #444; }
+nav .menu li {
+    line-height: 60px;
+    list-style: none;
+    padding: 0px 25px;
+}
+nav .menu li div {
+    display: inline-block;
+}
+nav .menu li .icon {
+    width: 40px;
+}
+nav .menu li.active {
+    background-color: #3498db;
+    color: #fff;
+    border-radius: 6px;
+}
+
+.container {
+    position: absolute;
+    top: 60px;left: 30%;right: 5%;
+}
+
+@media (max-width: 480px) {
+    nav .menu li .text {
+        display: none;
+    }
+}

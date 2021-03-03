@@ -1,0 +1,54 @@
+body { background-color: #fff; }
+header {
+    position: fixed;
+    top: 0px;left: 0px;right: 0px;
+    line-height: 70px;
+    color: #fff;
+    z-index: 3;
+}
+header div,
+header h1 {
+    display: inline-block;
+    margin: -2px;
+    color: #fff;
+    font-size: 24px;
+    margin-left: 2.5%;
+    font-family: RobotoBold;
+}
+header #toggleMenu {
+    margin-left: 5%;
+}
+
+nav.menu {
+    position: fixed;
+    top: 70px;left: 0px;bottom: 0px;
+    width: 25%;
+    background-color: #fff;
+    border-right: 1px solid #ddd;
+}
+nav.menu a {
+    color: #444;
+}
+nav.menu li {
+    list-style: none;
+    line-height: 55px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+nav.menu li div {
+    display: inline-block;
+}
+nav.menu li .icon {
+    width: 40px;
+}
+nav.menu li.active {
+    background-color: #3498db;
+    color: #fff;
+    padding: 0px 20px;
+    border-radius: 6px;
+}
+
+.container {
+    position: absolute;
+    top: 120px;left: 30%;right: 5%;
+}
