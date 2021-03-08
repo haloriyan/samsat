@@ -6,6 +6,8 @@
     use Carbon\Carbon;
     setlocale(LC_TIME, 'id_ID');
     Carbon::setLocale('id');
+
+    $i = ($datas->currentPage() - 1) * $datas->perPage() + 1;
 @endphp
 
 @section('content')
@@ -22,15 +24,19 @@
         <input type="text" class="box" name="company" placeholder="Nama perusahaan" value="{{ $req->company }}">
     </form>
 </div>
-<div class="bagi bagi-2 rata-kanan">
-    <button class="hijau mt-4" onclick="exportToCSV('{{ json_encode($datasToExport) }}', 'PKB.csv')">
-        Download ke Excel
-    </button>
+<div class="bagi lebar-10"></div>
+<div class="bagi lebar-40 mt-1">
+    <div class="mt-1">Rentang Tanggal Pembayaran :</div>
+    <input type="text" class="box" id="dateFilter" onchange="filterDate(this.value)">
+    @if ($req->start_date != "")
+        <span id="clearDate" onclick="clearDate()"><i class="fas fa-times"></i></span>
+    @endif
 </div>
 
 <table class="mt-4">
     <thead>
         <tr>
+            <th>No</th>
             <th>Perusahaan</th>
             <th>Tanggal Pembayaran</th>
             <th>Nomor Polisi</th>
@@ -43,8 +49,9 @@
                 $nopols = explode(",", $data->nopol);
             @endphp
             <tr>
+                <td>{{ $i++ }}</td>
                 <td>{{ $data->company->name }}</td>
-                <td>{{ Carbon::parse($data->payment_date)->isoFormat('d MMMM Y') }}</td>
+                <td>{{ Carbon::parse($data->payment_date)->isoFormat('D MMMM Y') }}</td>
                 <td>
                     {{ count($nopols) }} nomor
                 </td>
@@ -57,6 +64,17 @@
         @endforeach
     </tbody>
 </table>
+
+<div class="mt-4">
+    <div class="bagi lebar-70">
+        {{ $datas->links('pagination::bootstrap-4') }}
+    </div>
+    <div class="bagi lebar-30">
+        <button class="lebar-100 hijau" onclick="exportToCSV('{{ json_encode($datasToExport) }}', '{{ $generatedFileName }}')">
+            Download Data
+        </button>
+    </div>
+</div>
 
 <div class="bg"></div>
 <div class="popupWrapper" id="detail">
@@ -91,10 +109,12 @@
 @endsection
 
 @section('javascript')
-<script src="{{ asset('js/exporter.js') }}"></script>
-<script src="{{ asset('js/moment.min.js') }}"></script>
-<script src="{{ asset('js/moment-with-locales.min.js') }}"></script>
 <script>
+    flatpickr("#dateFilter", {
+        mode: "range",
+        defaultDate: ["{{ $req->start_date }}", "{{ $req->end_date }}"]
+    });
+
     const seeDetail = data => {
         data = JSON.parse(data);
         munculPopup("#detail");
@@ -118,6 +138,26 @@
                 createTo: '#nopolArea'
             });
         });
+    }
+
+    let url = new URL(document.URL);
+
+    const filterDate = value => {
+        let date = value.split(' to ');
+        let startDate = date[0];
+        let endDate = date[1];
+
+        if (endDate !== undefined) {
+            url.searchParams.set('start_date', startDate);
+            url.searchParams.set('end_date', endDate);
+            url.searchParams.delete('page');
+            window.location = url.toString();
+        }
+    }
+    const clearDate = () => {
+        url.searchParams.delete('start_date');
+        url.searchParams.delete('end_date');
+        window.location = url.toString();
     }
 </script>
 @endsection

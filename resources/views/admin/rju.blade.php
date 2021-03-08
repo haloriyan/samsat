@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', "Retribusi Jasa Usaha")
+@section('title', "Permohonan Menjadi Wajib Retribusi Jasa Usaha")
 
 @php
     use Carbon\Carbon;
@@ -9,25 +9,18 @@
 
 @section('content')
 <div class="bagi bagi-2">
-    <form action="{{ route('admin.pap') }}">
+    <form action="{{ route('admin.rju') }}">
         <div class="mt-2">Cari berdasarkan perusahaan :</div>
         <input type="text" class="box" name="company" placeholder="Nama perusahaan" value="{{ $req->company }}">
     </form>
 </div>
-<div class="bagi lebar-20"></div>
-<div class="bagi lebar-30">
-    <form action="{{ route('admin.pap') }}">
-        <div class="mt-2">Status :</div>
-        <select id="status" class="box" onchange="filter('status', this.value)">
-            <option selected value="">Semua Data</option>
-            @foreach ($statuses as $code => $status)
-                @php
-                    $isSelected = $code == $req->status && $req->status != "" ? 'selected' : '';
-                @endphp
-                <option {{ $isSelected }} value="{{ $code }}">{{ $status }}</option>
-            @endforeach
-        </select>
-    </form>
+<div class="bagi lebar-10"></div>
+<div class="bagi lebar-40 mt-1">
+    <div class="mt-1">Rentang Tanggal Data Dikirimkan :</div>
+    <input type="text" class="box" id="dateFilter" onchange="filterDate(this.value)">
+    @if ($req->start_date != "")
+        <span id="clearDate" onclick="clearDate()"><i class="fas fa-times"></i></span>
+    @endif
 </div>
 
 @if ($company != null)
@@ -45,7 +38,7 @@
             <th>Alamat</th>
             <th>NPWP Penanggung Jawab</th>
             <th>No. WhatsApp</th>
-            <th>Dibuat pada</th>
+            <th>Dikirimkan pada</th>
         </tr>
     </thead>
     <tbody>
@@ -63,4 +56,44 @@
         @endforeach
     </tbody>
 </table>
+
+<div class="mt-4">
+    <div class="bagi lebar-70">
+        {{ $datas->links('pagination::bootstrap-4') }}
+    </div>
+    <div class="bagi lebar-30">
+        <button class="lebar-100 hijau" onclick="exportToCSV('{{ json_encode($datasToExport) }}', '{{ $generatedFileName }}')">
+            Download Data
+        </button>
+    </div>
+</div>
+@endsection
+
+@section('javascript')
+<script>
+    flatpickr("#dateFilter", {
+        mode: "range",
+        defaultDate: ["{{ $req->start_date }}", "{{ $req->end_date }}"]
+    });
+
+    let url = new URL(document.URL);
+
+    const filterDate = value => {
+        let date = value.split(' to ');
+        let startDate = date[0];
+        let endDate = date[1];
+
+        if (endDate !== undefined) {
+            url.searchParams.set('start_date', startDate);
+            url.searchParams.set('end_date', endDate);
+            url.searchParams.delete('page');
+            window.location = url.toString();
+        }
+    }
+    const clearDate = () => {
+        url.searchParams.delete('start_date');
+        url.searchParams.delete('end_date');
+        window.location = url.toString();
+    }
+</script>
 @endsection

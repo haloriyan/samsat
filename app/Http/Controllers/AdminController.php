@@ -53,6 +53,16 @@ class AdminController extends Controller
             'companies' => $companies
         ]);
     }
+    public function generateFileName($context, $startDate = NULL, $endDate = NULL) {
+        $ret = $context."_";
+        if ($startDate || $endDate) {
+            $startDate = Carbon::parse($startDate);
+            $endDate = Carbon::parse($endDate);
+            $ret .= $startDate->isoFormat('D_MMMM_Y')."-".$endDate->isoFormat('D_MMMM_Y');
+        }
+        $ret .= "_exported_at_".date('Ymd');
+        return $ret.".csv";
+    }
     public function pkb(Request $req) {
         global $companySearch;
         $companyID = $req->company_id;
@@ -63,12 +73,15 @@ class AdminController extends Controller
             $company = CompanyController::get([
                 ['id', '=', $companyID]
             ])->first();
-            $queryFilter = [
-                ['company_id', $companyID]
-            ];
         }
 
         $datas = PkbController::get($queryFilter);
+
+        if ($req->start_date != "") {
+            $startDate = $req->start_date;
+            $endDate = $req->end_date;
+            $datas = $datas->whereBetween('payment_date', [$startDate, $endDate]);
+        }
 
         if ($req->company != "") {
             $companySearch = $req->company;
@@ -79,11 +92,13 @@ class AdminController extends Controller
         }
 
         $datas = $datas->orderBy('created_at', 'DESC')
-        ->with('company')
-        ->get();
+        ->with('company');
 
-        foreach ($datas as $data) {
+        $datasToExport = [];
+        $i = 1;
+        foreach ($datas->get() as $data) {
             $datasToExport[] = [
+                "No" => $i++,
                 "Nama Perusahaan" => $data->company->name,
                 "Alamat Perusahaan" => $data->company->address,
                 "No. Telepon / WhatsApp Perusahaan" => $data->company->phone,
@@ -92,10 +107,13 @@ class AdminController extends Controller
             ];
         }
 
+        $datas = $datas->paginate(50);
+
         return view('admin.pkb', [
             'datas' => $datas,
             'datasToExport' => $datasToExport,
             'req' => $req,
+            'generatedFileName' => $this->generateFileName("PKB_Tahunan", $req->start_date, $req->end_date),
             'company' => $company
         ]);
     }
@@ -119,12 +137,36 @@ class AdminController extends Controller
         }
 
         $datas = $datas->with('company')
-        ->orderBy('created_at', 'DESC')
-        ->get();
+        ->orderBy('created_at', 'DESC');
+
+        $datasToExport = [];
+        $i = 1;
+        foreach ($datas->get() as $data) {
+            $datasToExport[] = [
+                "No" => $i++,
+                "Nama Perusahaan" => $data->company->name,
+                "Alamat Perusahaan" => $data->company->address,
+                "No. Telepon / WhatsApp Perusahaan" => $data->company->phone,
+                "Nama Penanggung Jawab" => $data->name,
+                "Alamat Penanggung Jawab" => $data->address,
+                "NPWP Penanggung Jawab" => $data->npwp,
+                "No. Telepon Penanggung Jawab" => $data->phone
+            ];
+        }
+
+        if ($req->start_date != "") {
+            $startDate = $req->start_date;
+            $endDate = $req->end_date;
+            $datas = $datas->whereBetween('created_at', [$startDate, $endDate]);
+        }
+
+        $datas = $datas->paginate(50);
 
         return view('admin.rju', [
             'datas' => $datas,
+            'datasToExport' => $datasToExport,
             'req' => $req,
+            'generatedFileName' => $this->generateFileName("Permohonan_Wajib_RJU", $req->start_date, $req->end_date),
             'company' => $company
         ]);
     }
