@@ -4,11 +4,16 @@ namespace App\Http\Controllers;
 
 use Auth;
 use Session;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
+    public function __construct() {
+        setlocale(LC_TIME, 'id_ID');
+        Carbon::setLocale('id');
+    }
     public static function me() {
         return Auth::guard('admin')->user();
     }
@@ -77,33 +82,49 @@ class AdminController extends Controller
         ->with('company')
         ->get();
 
+        foreach ($datas as $data) {
+            $datasToExport[] = [
+                "Nama Perusahaan" => $data->company->name,
+                "Alamat Perusahaan" => $data->company->address,
+                "No. Telepon / WhatsApp Perusahaan" => $data->company->phone,
+                "Nomor Polisi" => $data->nopol,
+                "Tanggal Pembayaran" => Carbon::parse($data->payment_date)->isoFormat('d MMMM Y')
+            ];
+        }
+
         return view('admin.pkb', [
             'datas' => $datas,
+            'datasToExport' => $datasToExport,
             'req' => $req,
             'company' => $company
         ]);
     }
     public function rju(Request $req) {
-        $companyID = $req->company_id;
+        global $companySearch;
+        $companySearch = $req->company;
         $company = null;
         $queryFilter = null;
 
-        if ($companyID) {
+        $datas = RjuController::get($queryFilter);
+
+        if ($companySearch) {
             $company = CompanyController::get([
-                ['id', '=', $companyID]
+                ['name', 'LIKE', '%'.$companySearch.'%']
             ])->first();
-            $queryFilter = [
-                ['company_id', $companyID]
-            ];
+
+            $datas = $datas->whereHas('company', function($query) {
+                global $companySearch;
+                $query->where('name', 'LIKE', "%".$companySearch."%");
+            });
         }
 
-        $datas = RjuController::get($queryFilter)
-        ->with('company')
+        $datas = $datas->with('company')
         ->orderBy('created_at', 'DESC')
         ->get();
 
         return view('admin.rju', [
             'datas' => $datas,
+            'req' => $req,
             'company' => $company
         ]);
     }

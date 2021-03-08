@@ -24,9 +24,9 @@
         {{ csrf_field() }}
         <div class="mt-2">Nomor Polisi :</div>
         <div id="nopolArea">
-            <input type="text" class="box" name="nopol[]" required>
+            <input type="text" class="box" name="nopol[]" placeholder="contoh : L 3156 JV" required>
         </div>
-        <button type="button" class="mt-2" onclick="addNopol()"><i class="fas fa-plus mr-1"></i> nopol</button>
+        <button type="button" class="mt-2" onclick="addNopol()"><i class="fas fa-plus mr-1"></i> Nomor Lainnya</button>
         <div class="mt-2">Tanggal Pembayaran :</div>
         <input type="text" class="box" name="payment_date" id="paymentDate" required>
 

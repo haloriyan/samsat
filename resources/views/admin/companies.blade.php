@@ -73,6 +73,16 @@
                     </div>
                 </div>
             </div>
+            <div class="bagi bagi-3 datas">
+                <div class="wrap">
+                    <div class="bg-biru item rounded smallPadding rata-tengah" onclick="see('pbb')">
+                        <div class="wrap super">
+                            <div class="icon"><i class="fas fa-water"></i></div>
+                            <div class="mt-2">Pajak Bahan Bakar</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -96,6 +106,8 @@
             redirectTo = "{{ route('admin.rju') }}";
         }else if (what == "pap") {
             redirectTo = "{{ route('admin.pap') }}";
+        }else if (what == "pbb") {
+            redirectTo = "{{ route('admin.pbbkb') }}"
         }
         redirectTo += "?company=" + companyName;
         window.location = redirectTo;

@@ -1,5 +1,26 @@
 @extends('layouts.auth')
 
+@section('title', "Login Admin")
+
+@section('head.dependencies')
+<style>
+    .container {
+        left: 35%;right: 35%;
+    }
+    .container .logo-sutra {
+        height: 120px;
+    }
+    @media (max-width: 480px) {
+        .container {
+            left: 5%;right: 5%;
+        }
+        .container .logo-sutra {
+            height: 200px;
+        }
+    }
+</style>
+@endsection
+
 @section('content')
     <form action="{{ route('admin.login') }}" method="POST">
         {{ csrf_field() }}
@@ -22,6 +43,6 @@
             </div>
             <input type="password" name="password" placeholder="Password" required>
         </div>
-        <button class="lebar-100 biru mt-3">Login</button>
+        <button class="lebar-100 biru mt-3">Login sebagai Admin</button>
     </form>
 @endsection

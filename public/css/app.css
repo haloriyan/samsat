@@ -17,14 +17,13 @@ header {
 
 .navigation {
 	position: fixed;
-	bottom: 20px;left: 5%;right: 5%;
+	bottom: 0px;left: 0%;right: 0%;
 	border-top: 1px solid #ddd;
 	background-color: #fff;
 	line-height: 50px;
 	text-align: center;
-	border-radius: 900px;
-	/* box-shadow: 1px 1px 10px 1px #ddd; */
-	border: 1px solid #ddd;
+	border-top-left-radius: 16px;
+	border-top-right-radius: 16px;
 }
 .navigation i.active {
 	color: #3498db;
