@@ -49,12 +49,14 @@
     }
 
 
-	.services .item {
-		height: 165px;
-	}
-    .services .icon {
-        font-size: 40px;
+	.services .item { height: 165px; }
+    .services.special .item {
+        height: 90px;
+        box-shadow: none;
+        border: 1px solid #3498db;
+        color: #3498db;
     }
+    .services .icon { font-size: 40px; }
     .services h3 {
         color: #fff;
 		font-size: 20px;
@@ -65,7 +67,8 @@
 		margin-top: 0px;
 		font-size: 13px;
 	}
-	.services .item.info h3 { color: #444; }
+    .services .item.info h3 { color: #444; }
+    .services.special .item h3 { margin: 0px;color: #3498db; }
 </style>
 @endsection
 
@@ -96,12 +99,28 @@
 <div class="tiles mt-4">
     <div class="bagi bagi-2 services rata-tengah">
         <div class="wrap">
-            <div class="bg-biru item rounded smallPadding">
-                <div class="wrap super">
-                    <div class="icon"><i class="fas fa-list"></i></div>
-                    <h3 class="">Pelaporan Status</h3>
+            <a href="{{ route('app.kendaraan') }}">
+                <div class="bg-biru item rounded smallPadding">
+                    <div class="wrap super">
+                        <div class="icon"><i class="fas fa-car"></i></div>
+                        <h3 class="">Tambah Data</h3>
+                        <p>Kendaraan Bermotor Perusahaan</p>
+                    </div>
                 </div>
-            </div>
+            </a>
+        </div>
+    </div>
+    <div class="bagi bagi-2 services rata-tengah">
+        <div class="wrap">
+            <a href="{{ route('app.kendaraanStatus') }}">
+                <div class="bg-biru item rounded smallPadding">
+                    <div class="wrap super">
+                        <div class="icon"><i class="fas fa-list"></i></div>
+                        <h3 class="">Lapor Status</h3>
+                        <p>Kendaraan Bermotor Perusahaan</p>
+                    </div>
+                </div>
+            </a>
         </div>
     </div>
     <div class="bagi bagi-2 services rata-tengah">
@@ -155,11 +174,13 @@
             </a>
         </div>
     </div>
-    <div class="bagi bagi-2 services rata-tengah">
-        <div class="wrap">
-            <div class="bayangan-5 item rounded smallPadding info">
-                <div class="wrap super">
-                    <div class="icon"><i class="fas fa-info"></i></div>
+    <div class="services special rata-tengah mt-2">
+        <div class="bayangan-5 item rounded smallPadding info">
+            <div class="wrap super">
+                <div class="bagi lebar-30">
+                    <i class="fas fa-info"></i>
+                </div>
+                <div class="bagi lebar-70">
                     <h3 class="teks-merah">Info Lainnya</h3>
                 </div>
             </div>

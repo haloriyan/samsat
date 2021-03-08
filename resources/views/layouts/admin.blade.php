@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>@yield('title')</title>
+    <title>@yield('title') - {{ env('APP_NAME') }}</title>
     {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> --}}
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('fa/css/all.min.css') }}">
@@ -39,6 +39,18 @@
             <li class="{{ Route::currentRouteName() == 'admin.companies' ? 'active' : '' }}">
                 <div class="icon"><i class="fas fa-briefcase"></i></div>
                 <div class="text">Perusahaan Terdaftar</div>
+            </li>
+        </a>
+        <a href="{{ route('admin.kendaraan') }}">
+            <li class="{{ Route::currentRouteName() == 'admin.kendaraan' ? 'active' : '' }}">
+                <div class="icon"><i class="fas fa-car"></i></div>
+                <div class="text">Kendaraan Perusahaan</div>
+            </li>
+        </a>
+        <a href="{{ route('admin.kendaraanStatus') }}">
+            <li class="{{ Route::currentRouteName() == 'admin.kendaraanStatus' ? 'active' : '' }}">
+                <div class="icon"><i class="fas fa-file"></i></div>
+                <div class="text">Laporan Status Kendaraan</div>
             </li>
         </a>
         <a href="{{ route('admin.pkb') }}">

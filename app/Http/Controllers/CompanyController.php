@@ -188,4 +188,10 @@ class CompanyController extends Controller
 
         return response()->json(['status' => 200]);
     }
+    public function formKendaraan() {
+        return view('company.kendaraan');
+    }
+    public function formKendaraanStatus() {
+        return view('company.kendaraanStatus');
+    }
 }

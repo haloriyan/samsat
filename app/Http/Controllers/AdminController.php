@@ -44,7 +44,13 @@ class AdminController extends Controller
         ]);
     }
     public function dashboard() {
-        return view('admin.dashboard');
+        $companies = CompanyController::get()->get('id');
+        $kendaraan = KendaraanController::get()->get('id');
+        
+        return view('admin.dashboard', [
+            'companies' => $companies,
+            'kendaraan' => $kendaraan
+        ]);
     }
     public function companies() {
         $companies = CompanyController::get()->get();
@@ -221,6 +227,81 @@ class AdminController extends Controller
         return view('admin.pbbkb', [
             'req' => $req,
             'datas' => $datas
+        ]);
+    }
+    public function kendaraan(Request $req) {
+        $datas = KendaraanController::get();
+
+        if ($req->company != "") {
+            global $companySearch;
+            $companySearch = $req->company;
+            $datas = $datas->whereHas('company', function($query) {
+                global $companySearch;
+                $query->where('name', 'LIKE', '%'.$companySearch.'%');
+            });
+        }
+
+        $datas = $datas->with('company');
+
+        $datasToExport = [];
+        $i = 1;
+        foreach ($datas->get() as $data) {
+            $datasToExport[] = [
+                "No" => $i++,
+                "Nama Perusahaan" => $data->company->name,
+                "Alamat Perusahaan" => $data->company->address,
+                "No. Telepon / WhatsApp Perusahaan" => $data->company->phone,
+                "Nomor Polisi" => $data->nopol,
+                "Nomor Rangka" => $data->nomor_rangka
+            ];
+        }
+
+        $datas = $req->company != "" ? $datas->get() : $datas->paginate(50);
+        $generatedFileName = $this->generateFileName("Data_Kendaraan_Bermotor_Perusahaan");
+
+        return view('admin.kendaraan', [
+            'datas' => $datas,
+            'datasToExport' => $datasToExport,
+            'generatedFileName' => $generatedFileName,
+            'req' => $req
+        ]);
+    }
+    public function kendaraanStatus(Request $req) {
+        $datas = KendaraanStatusController::get();
+
+        if ($req->company != "") {
+            global $companySearch;
+            $companySearch = $req->company;
+            $datas = $datas->whereHas('company', function($query) {
+                global $companySearch;
+                $query->where('name', 'LIKE', '%'.$companySearch.'%');
+            });
+        }
+        $datas = $datas->with('company');
+
+        $datasToExport = [];
+        $i = 1;
+        foreach ($datas->get() as $data) {
+            $keterangan = $data->status != "Jual" ? $keterangan = asset("storage/keterangan_status/".$data->keterangan) : $data->keterangan;
+            $datasToExport[] = [
+                "No" => $i++,
+                "Nama Perusahaan" => $data->company->name,
+                "Alamat Perusahaan" => $data->company->address,
+                "No. Telepon / WhatsApp Perusahaan" => $data->company->phone,
+                "Nomor Polisi" => $data->nopol,
+                "Status" => $data->status,
+                "Keterangan" => $keterangan
+            ];
+        }
+
+        $generatedFileName = $this->generateFileName("Laporan_Status_Kendaraan");
+        $datas = $req->company != "" ? $datas->get() : $datas->paginate(50);
+
+        return view('admin.kendaraanStatus', [
+            'datas' => $datas,
+            'datasToExport' => $datasToExport,
+            'generatedFileName' => $generatedFileName,
+            'req' => $req,
         ]);
     }
 }

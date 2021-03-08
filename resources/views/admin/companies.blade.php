@@ -45,6 +45,16 @@
             </h3>
             <div class="bagi bagi-3 datas">
                 <div class="wrap">
+                    <div class="bg-biru item rounded smallPadding rata-tengah pointer" onclick="see('kendaraan')">
+                        <div class="wrap super">
+                            <div class="icon"><i class="fas fa-car"></i></div>
+                            <div class="mt-2">Kendaraan Terdaftar</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bagi bagi-3 datas">
+                <div class="wrap">
                     <div class="bg-biru item rounded smallPadding rata-tengah pointer" onclick="see('pkb')">
                         <div class="wrap super">
                             <div class="icon"><i class="fas fa-calendar"></i></div>
@@ -107,7 +117,9 @@
         }else if (what == "pap") {
             redirectTo = "{{ route('admin.pap') }}";
         }else if (what == "pbb") {
-            redirectTo = "{{ route('admin.pbbkb') }}"
+            redirectTo = "{{ route('admin.pbbkb') }}";
+        }else if (what == "kendaraan") {
+            redirectTo = "{{ route('admin.kendaraan') }}";
         }
         redirectTo += "?company=" + companyName;
         window.location = redirectTo;
