@@ -175,16 +175,18 @@
         </div>
     </div>
     <div class="services special rata-tengah mt-2">
-        <div class="bayangan-5 item rounded smallPadding info">
-            <div class="wrap super">
-                <div class="bagi lebar-30">
-                    <i class="fas fa-info"></i>
-                </div>
-                <div class="bagi lebar-70">
-                    <h3 class="teks-merah">Info Lainnya</h3>
+        <a href="{{ route('app.layananUnggulan') }}">
+            <div class="bayangan-5 item rounded smallPadding info">
+                <div class="wrap super">
+                    <div class="bagi lebar-30">
+                        <i class="fas fa-info"></i>
+                    </div>
+                    <div class="bagi lebar-70">
+                        <h3 class="teks-merah">Info Lainnya</h3>
+                    </div>
                 </div>
             </div>
-        </div>
+        </a>
     </div>
 </div>
 

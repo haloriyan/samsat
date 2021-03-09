@@ -23,7 +23,7 @@
 <body>
     
 <header class="bg-biru">
-    <div id="toggleMenu"><i class="fas fa-bars"></i></div>
+    <div id="toggleMenu" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
     <h1>@yield('title')</h1>
 </header>
 
@@ -45,6 +45,12 @@
             <li class="{{ Route::currentRouteName() == 'admin.kendaraan' ? 'active' : '' }}">
                 <div class="icon"><i class="fas fa-car"></i></div>
                 <div class="text">Kendaraan Perusahaan</div>
+            </li>
+        </a>
+        <a href="{{ route('admin.layananUnggulan') }}">
+            <li class="{{ Route::currentRouteName() == 'admin.layananUnggulan' ? 'active' : '' }}">
+                <div class="icon"><i class="fas fa-info"></i></div>
+                <div class="text">Layanan Unggulan</div>
             </li>
         </a>
         <a href="{{ route('admin.kendaraanStatus') }}">
@@ -81,15 +87,47 @@
 </nav>
 
 <div class="content">
-    @yield('content')
+    <div class="wrap">
+        @yield('content')
+    </div>
     <div class="tinggi-65"></div>
 </div>
 
 <script src="{{ asset('js/base.js') }}"></script>
 <script src="{{ asset('js/flatpickr/dist/flatpickr.min.js') }}"></script>
 <script src="{{ asset('js/exporter.js') }}"></script>
+<script src="{{ asset('js/storage.js') }}"></script>
 <script src="{{ asset('js/moment.min.js') }}"></script>
 <script src="{{ asset('js/moment-with-locales.min.js') }}"></script>
+<script>
+    let menu = select("nav.menu");
+    let content = select(".content");
+    let storage = new Storage("state");
+    
+    let state = storage.get("state");
+    if (state == null) {
+        storage.set({
+            isMenuOpened: false,
+        });
+        menu.classList.remove('active');
+        content.classList.remove('active');
+    }
+    if (state.isMenuOpened) {
+        menu.classList.add('active');
+        content.classList.add('active');
+    }else {
+        menu.classList.remove('active');
+        content.classList.remove('active');
+    }
+
+    const toggleMenu = () => {
+        menu.classList.toggle("active");
+        content.classList.toggle("active");
+        storage.set({
+            isMenuOpened: !state.isMenuOpened
+        });
+    }
+</script>
 @yield('javascript')
 
 </body>

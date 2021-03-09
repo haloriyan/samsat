@@ -38,6 +38,9 @@ Route::group(['prefix' => "app"], function() {
     
     Route::get('kendaraan-status', "CompanyController@formKendaraanStatus")->name('app.kendaraanStatus')->middleware('Company');
     Route::post('kendaraan-status/store', "KendaraanStatusController@store")->name('app.kendaraanStatus.store')->middleware('Company');
+
+    Route::get('layanan-unggulan', "CompanyController@layananUnggulan")->name('app.layananUnggulan')->middleware('Company');
+    Route::get('layanan-unggulan/{id}/detail', "LayananController@detail")->name('app.layananUnggulan.detail')->middleware('Company');
 });
 
 Route::group(['prefix' => "admin"], function() {
@@ -55,4 +58,8 @@ Route::group(['prefix' => "admin"], function() {
     Route::get('pbbkb/{id}/{status}', "PbbkbController@action")->name('admin.pbbkb.action')->middleware('Admin');
     Route::get('kendaraan', "AdminController@kendaraan")->name('admin.kendaraan')->middleware('Admin');
     Route::get('kendaraan-status', "AdminController@kendaraanStatus")->name('admin.kendaraanStatus')->middleware('Admin');
+
+    Route::get('layanan-unggulan', "AdminController@layananUnggulan")->name('admin.layananUnggulan')->middleware('Admin');
+    Route::post('layanan-unggulan/store', "LayananController@store")->name('admin.layananUnggulan.store')->middleware('Admin');
+    Route::post('layanan-unggulan/update', "LayananController@update")->name('admin.layananUnggulan.update')->middleware('Admin');
 });

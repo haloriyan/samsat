@@ -2,7 +2,7 @@ body { background-color: #fff; }
 header {
     position: fixed;
     top: 0px;left: 0px;right: 0px;
-    line-height: 70px;
+    line-height: 60px;
     color: #fff;
     z-index: 3;
 }
@@ -11,20 +11,38 @@ header h1 {
     display: inline-block;
     margin: -2px;
     color: #fff;
-    font-size: 24px;
+    font-size: 20px;
     margin-left: 2.5%;
     font-family: RobotoBold;
 }
 header #toggleMenu {
-    margin-left: 5%;
+    margin-left: 2.5%;
+    font-size: 17px;
+    cursor: pointer;
 }
 
 nav.menu {
     position: fixed;
-    top: 70px;left: 0px;bottom: 0px;
-    width: 25%;
+    top: 60px;left: 0px;bottom: 0px;
+    width: 80px;
     background-color: #fff;
     border-right: 1px solid #ddd;
+    overflow: auto;
+    transition: 0.4s;
+}
+nav.menu.active { 
+    width: 25%;
+ }
+nav.menu::-webkit-scrollbar {
+    background-color: #eee;
+    width: 6px;
+}
+nav.menu::-webkit-scrollbar-thumb {
+    background-color: #aaa;
+    border-radius: 90px;
+}
+nav.menu::-webkit-scrollbar-thumb:hover {
+    background-color: #2980b9;
 }
 nav.menu .super { margin: 7%; }
 nav.menu a {
@@ -40,6 +58,10 @@ nav.menu li div {
     display: inline-block;
 }
 nav.menu li .icon {
+    width: 100%;
+    text-align: center;
+}
+nav.menu.active li .icon {
     width: 40px;
 }
 nav.menu li.active {
@@ -48,8 +70,19 @@ nav.menu li.active {
     padding: 0px 20px;
     border-radius: 6px;
 }
+nav.menu li .text {
+    display: none;
+}
+nav.menu.active li .text {
+    display: inline-block;
+}
 
 .content {
     position: absolute;
-    top: 120px;left: 30%;right: 5%;
+    top: 80px;left: 100px;right: 5%;
 }
+.content > .wrap { margin: 2.5%; }
+.content.active {
+    left: 30%;top: 120px;
+}
+.content.active .wrap { margin: 0%; }

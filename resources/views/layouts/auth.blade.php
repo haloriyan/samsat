@@ -26,7 +26,7 @@
             margin: -2px;
         }
         .form-group .icon {
-            width: 15%;
+            width: 14%;
             margin-top: 20px;
             font-size: 17px;
             color: #777;

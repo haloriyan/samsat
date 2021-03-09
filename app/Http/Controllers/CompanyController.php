@@ -194,4 +194,16 @@ class CompanyController extends Controller
     public function formKendaraanStatus() {
         return view('company.kendaraanStatus');
     }
+    public function layananUnggulan(Request $req) {
+        $queryFilter = [];
+        if ($req->category != "") {
+            $queryFilter[] = ["category", "LIKE", "%".$req->category."%"];
+        }
+        $datas = LayananController::get($queryFilter)->get();
+
+        return view('company.layananUnggulan', [
+            'datas' => $datas,
+            'req' => $req
+        ]);
+    }
 }

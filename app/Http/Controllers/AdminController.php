@@ -304,4 +304,16 @@ class AdminController extends Controller
             'req' => $req,
         ]);
     }
+    public function layananUnggulan(Request $req) {
+        $queryFilter = [];
+        if ($req->q != "") {
+            $queryFilter[] = ["nama", "LIKE", "%".$req->q."%"];
+        }
+        $datas = LayananController::get($queryFilter)->get();
+
+        return view('admin.layananUnggulan', [
+            'datas' => $datas,
+            'req' => $req
+        ]);
+    }
 }

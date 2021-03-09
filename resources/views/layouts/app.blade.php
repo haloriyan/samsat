@@ -27,11 +27,13 @@
             </div>
         </div>
     </a>
-    <div class="bagi bagi-3">
-        <div class="wrap">
-            <i class="fas fa-search"></i>
+    <a href="{{ route('app.layananUnggulan') }}">
+        <div class="bagi bagi-3">
+            <div class="wrap">
+                <i class="fas fa-search {{ Route::currentRouteName() == 'app.layananUnggulan' ? 'active' : '' }}"></i>
+            </div>
         </div>
-    </div>
+    </a>
     <a href="{{ route('app.profile') }}">
         <div class="bagi bagi-3">
             <div class="wrap">
