@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use Mail;
 use Session;
+use Carbon\Carbon;
+use App\Mail\SendOTP;
 use App\Models\Company;
+use App\Models\OtpCode;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 
@@ -49,6 +53,25 @@ class CompanyController extends Controller
             'message' => $message
         ]);
     }
+    public static function generateRandomString($length = 25) {
+        $charas = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        $charasLength = strlen($charas);
+
+        $randomString = "";
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $charas[rand(0, $charasLength - 1)];
+        }
+
+        return $randomString;
+    }
+    public static function generateToken($length = 4) {
+        $token = "";
+        for ($i = 0; $i < $length; $i++) {
+            $token .= rand(0, 9);
+        }
+
+        return $token;
+    }
     public function register(Request $req) {
         $saveData = Company::create([
             'name' => $req->name,
@@ -57,11 +80,79 @@ class CompanyController extends Controller
             'password' => bcrypt($req->password),
             'address' => $req->address,
             'npwp' => $req->npwp,
+            'is_active' => 0
+        ]);
+
+        $sessionID = self::generateRandomString();
+        $token = self::generateToken();
+        $validUntil = Carbon::now()->addMinutes(30)->format('Y-m-d H:i:s');
+        $generateOTP = OtpCode::create([
+            'company_id' => $saveData->id,
+            'session_id' => $sessionID,
+            'token' => $token,
+            'valid_until' => $validUntil,
+        ]);
+
+        $saveData->token = $token;
+        $sendOTP = Mail::to($req->email)->send(new SendOTP($saveData));
+
+        return redirect()->route('app.registerVerification', $sessionID);
+    }
+    public function registerVerification($sessionID) {
+        $check = OtpCode::where('session_id', $sessionID)->first();
+        if ($check == "") {
+            return "403";
+        }
+
+        $message = Session::get('message');
+
+        return view('company.registerVerification', [
+            'sessionID' => $sessionID,
+            'message' => $message
+        ]);
+    }
+    public function otpAuth($sessionID, Request $req) {
+        $token = $req->token;
+        $data = OtpCode::where([
+            ['session_id', $sessionID],
+            ['token', $token]
+        ])
+        ->with('company')
+        ->first();
+
+        if ($data == "") {
+            return redirect()->route('app.registerVerification', $sessionID)->withErrors(["Token salah"]);
+        }
+        
+        $dateNow = Carbon::now()->format('Y-m-d H:i:s');
+        if ($data->valid_until < $dateNow) {
+            return redirect()->route('app.registerVerification', $sessionID)->withErrors(["Token sudah tidak berlaku. Mohon tunggu 10 detik kemudian klik tombol kirim ulang token"]);
+        }
+
+        $updateStatus = Company::where('id', $data->company->id)->update([
             'is_active' => 1
         ]);
 
-        return redirect()->route('app.loginPage')->with([
-            'message' => "Pendaftaran berhasil. Silahkan login"
+        $loggingIn = Auth::guard('company')->loginUsingId($data->company_id);
+
+        return redirect()->route('app.index');
+    }
+    public function resendToken($sessionID) {
+        $token = self::generateToken();
+        $validUntil = Carbon::now()->addMinutes(30)->format('Y-m-d H:i:s');
+
+        $data = OtpCode::where('session_id', $sessionID);
+        $updateData = $data->update([
+            'token' => $token,
+            'valid_until' => $validUntil,
+        ]);
+        $company = $data->with('company')->first()->company;
+        $company->token = $token;
+
+        $sendOTP = Mail::to($req->email)->send(new SendOTP($company));
+        
+        return redirect()->route('app.registerVerification', $sessionID)->with([
+            'message' => "Kami telah mengirimkan token baru"
         ]);
     }
     public function logout() {

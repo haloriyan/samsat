@@ -31,11 +31,17 @@
         </div>
         <div class="form-group">
             <div class="icon">
+                <i class="fas fa-id-card"></i>
+            </div>
+            <input type="text" name="npwp" placeholder="NPWP Perusahaan" required>
+        </div>
+        <div class="form-group">
+            <div class="icon">
                 <i class="fas fa-map-marker"></i>
             </div>
             <input type="text" name="address" placeholder="Alamat" required>
         </div>
-        <button class="lebar-100 biru mt-3">Register</button>
+        <button class="lebar-100 biru mt-3" onclick="clickBtn(this)">Register</button>
     
         <div class="mt-3 rata-tengah">
             <div class="teks-transparan">sudah punya akun?</div>
@@ -44,4 +50,12 @@
             </a>
         </div>
     </form>
+@endsection
+
+@section('javascript')
+<script>
+    const clickBtn = btn => {
+        btn.innerHTML = "<i class='fas fa-spinner'></i> memproses..."
+    }
+</script>
 @endsection

@@ -5,12 +5,12 @@
 @section('head.dependencies')
 <style>
     .greetings p {
-        font-size: 15px;
+        font-size: 14px;
         margin-top: 0px;
     }
     .greetings h3 {
         font-family: RobotoBold;
-        font-size: 24px;
+        font-size: 22px;
         margin-top: 0px;
     }
     .profile {
@@ -37,12 +37,12 @@
         overflow-x: scroll;
         overflow-y: hidden;
         white-space: nowrap;
-        height: 150px;
+        height: 170px;
     }
     .slider .item {
         width: 90%;
         margin-right: 2.5%;
-        height: 150px;
+        height: 170px;
         display: inline-block;
         vertical-align: top;
         border-radius: 6px;
@@ -75,8 +75,8 @@
 @section('content')
 <div class="bagi bagi-2">
     <div class="greetings">
-        <p class="teks-transparan">SAMSAT</p>
-        <h3>SUTRA GO</h3>
+        <p class="teks-transparan">Halo</p>
+        <h3>{{ $myData->first_name }}</h3>
     </div>
 </div>
 <div class="bagi bagi-2 rata-kanan">

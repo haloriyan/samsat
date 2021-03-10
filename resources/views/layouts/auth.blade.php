@@ -62,6 +62,7 @@
 </div>
 
 <script src="{{ asset('js/base.js') }}"></script>
+@yield('javascript')
 
 </body>
 </html>

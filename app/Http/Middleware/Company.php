@@ -21,6 +21,10 @@ class Company
         if ($myData == "") {
             return redirect()->route('app.loginPage');
         }
+        if ($myData->is_active == 0) {
+            Auth::guard('company')->logout();
+            return redirect()->route('app.loginPage')->withErrors(['Akun Anda belum aktif']);
+        }
         return $next($request);
     }
 }

@@ -41,8 +41,8 @@
         <textarea name="address" class="box">{{ $myData->address }}</textarea>
 
         <button class="lebar-100 biru mt-3">Ubah Profil</button>
-        <a href="{{ route('app.index') }}">
-            <button type="button" class="lebar-100 mt-2">kembali ke Halaman Utama</button>
+        <a href="{{ route('app.logout') }}">
+            <button type="button" class="lebar-100 mt-2">logout</button>
         </a>
     </form>
 @endsection
