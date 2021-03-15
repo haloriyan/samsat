@@ -22,8 +22,9 @@
 </head>
 <body>
     
-<header class="bg-biru">
+<header class="bayangan-5 bg-putih">
     <div id="toggleMenu" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+    <img src="{{ asset('images/sutra-go.png') }}" alt="" class="logo">
     <h1>@yield('title')</h1>
 </header>
 

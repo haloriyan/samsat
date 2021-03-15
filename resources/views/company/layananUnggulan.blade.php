@@ -69,8 +69,9 @@
             <div class="bg-putih rounded bayangan-5 item">
                 <div class="cover" bg-image="{{ asset('storage/foto_layanan_unggulan/'.$data->foto) }}"></div>
                 <div class="smallPadding">
-                    <div class="wrap">
-                        <h3>{{ $data->nama }}</h3>
+                    <div class="wrap super">
+                        <div class="teks-tebal mb-1">{{ $data->nama }}</div>
+                        <div class="teks-kecil teks-transparan">{{ $data->alamat }}</div>
                     </div>
                 </div>
             </div>

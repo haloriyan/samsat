@@ -88,4 +88,15 @@ class LayananController extends Controller
             'layanan' => $layanan
         ]);
     }
+    public function delete($id) {
+        $data = Layanan::where('id', $id);
+        $layanan = $data->first();
+
+        $deletePhoto = Storage::delete('public/foto_layanan_unggulan'.$layanan->foto);
+        $data->delete();
+
+        return redirect()->route('admin.layananUnggulan')->with([
+            'message' => "Data berhasil dihapus"
+        ]);
+    }
 }

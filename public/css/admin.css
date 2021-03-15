@@ -3,14 +3,14 @@ header {
     position: fixed;
     top: 0px;left: 0px;right: 0px;
     line-height: 60px;
-    color: #fff;
+    color: #444;
     z-index: 3;
 }
 header div,
 header h1 {
     display: inline-block;
     margin: -2px;
-    color: #fff;
+    color: #444;
     font-size: 20px;
     margin-left: 2.5%;
     font-family: RobotoBold;
@@ -19,6 +19,13 @@ header #toggleMenu {
     margin-left: 2.5%;
     font-size: 17px;
     cursor: pointer;
+    float: left;
+}
+header .logo {
+    height: 45px;
+    margin-top: 10px;
+    margin-left: 2.5%;
+    float: left;
 }
 
 nav.menu {
@@ -85,4 +92,4 @@ nav.menu.active li .text {
 .content.active {
     left: 30%;top: 120px;
 }
-.content.active .wrap { margin: 0%; }
+.content.active > .wrap { margin: 0%; }

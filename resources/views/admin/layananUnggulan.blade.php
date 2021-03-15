@@ -58,7 +58,7 @@
                                 <span onclick="edit('{{ $escapedData }}')" class="teks-hijau mr-1 pointer">
                                     <i class="fas fa-edit"></i>
                                 </span>
-                                <a href="#" class="teks-merah">
+                                <a href="{{ route('admin.layananUnggulan.delete', $data->id) }}" onclick="return confirm('Yakin ingin menghapus data layanan ini?')" class="teks-merah">
                                     <i class="fas fa-trash"></i>
                                 </a>
                             </div>

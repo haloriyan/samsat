@@ -2,10 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return redirect()->route('app.index');
-});
-
 Route::get('admin', function () {
     return redirect()->route('admin.loginPage');
 });
@@ -65,4 +61,5 @@ Route::group(['prefix' => "admin"], function() {
     Route::get('layanan-unggulan', "AdminController@layananUnggulan")->name('admin.layananUnggulan')->middleware('Admin');
     Route::post('layanan-unggulan/store', "LayananController@store")->name('admin.layananUnggulan.store')->middleware('Admin');
     Route::post('layanan-unggulan/update', "LayananController@update")->name('admin.layananUnggulan.update')->middleware('Admin');
+    Route::get('layanan-unggulan/{delete}', "LayananController@delete")->name('admin.layananUnggulan.delete')->middleware('Admin');
 });
