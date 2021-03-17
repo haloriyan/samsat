@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use Session;
 use Carbon\Carbon;
+use App\Models\Admin;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
@@ -46,10 +47,57 @@ class AdminController extends Controller
     public function dashboard() {
         $companies = CompanyController::get()->get('id');
         $kendaraan = KendaraanController::get()->get('id');
+        $layanan = LayananController::get()->get('id');
+        $pkb = PkbController::get()->orderBy('created_at', 'DESC')->paginate(5);
+        $statusKendaraan = KendaraanStatusController::get()->orderBy('created_at', 'DESC')->paginate(5);
         
         return view('admin.dashboard', [
             'companies' => $companies,
+            'layanan' => $layanan,
+            'pkb' => $pkb,
+            'statusKendaraan' => $statusKendaraan,
             'kendaraan' => $kendaraan
+        ]);
+    }
+    public function admin() {
+        $admins = Admin::all();
+        $myData = self::me();
+        $message = Session::get('message');
+
+        return view('admin.admin', [
+            'admins' => $admins,
+            'message' => $message,
+            'myData' => $myData
+        ]);
+    }
+    public function store(Request $req) {
+        $saveData = Admin::create([
+            'name' => $req->name,
+            'email' => $req->email,
+            'password' => bcrypt($req->password),
+            'role' => 'super',
+        ]);
+
+        return redirect()->route('admin.admin')->with([
+            'message' => "Admin baru berhasil ditambahkan"
+        ]);
+    }
+    public function update(Request $req) {
+        $id = $req->id;
+
+        $toUpdate = [
+            'name' => $req->name,
+            'email' => $req->email,
+        ];
+
+        if ($req->password != "") {
+            $toUpdate['password'] = bcrypt($req->password);
+        }
+
+        $updateData = Admin::where('id', $id)->update($toUpdate);
+
+        return redirect()->route('admin.admin')->with([
+            'message' => "Data admin berhasil diubah"
         ]);
     }
     public function companies() {

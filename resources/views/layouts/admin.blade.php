@@ -84,6 +84,12 @@
                 <div class="text">Pajak Bahan Bakar</div>
             </li>
         </a>
+        <a href="{{ route('admin.admin') }}">
+            <li class="{{ Route::currentRouteName() == 'admin.admin' ? 'active' : '' }}">
+                <div class="icon"><i class="fas fa-users"></i></div>
+                <div class="text">User Admin</div>
+            </li>
+        </a>
     </div>
 </nav>
 

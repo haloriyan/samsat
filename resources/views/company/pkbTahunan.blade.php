@@ -19,7 +19,7 @@
 
 @section('content')
     <div class="tinggi-40"></div>
-    <h2>Pengajuan Layanan Pembayaran Kendaran Bermotor Tahunan</h2>
+    <h2>Pengajuan Layanan Pembayaran Pajak Kendaran Bermotor Tahunan</h2>
     <form action="{{ route('app.pkbTahunan.store') }}" method="POST">
         {{ csrf_field() }}
         <div class="mt-2">Nomor Polisi :</div>

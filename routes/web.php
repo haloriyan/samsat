@@ -57,6 +57,9 @@ Route::group(['prefix' => "admin"], function() {
     Route::get('pbbkb/{id}/{status}', "PbbkbController@action")->name('admin.pbbkb.action')->middleware('Admin');
     Route::get('kendaraan', "AdminController@kendaraan")->name('admin.kendaraan')->middleware('Admin');
     Route::get('kendaraan-status', "AdminController@kendaraanStatus")->name('admin.kendaraanStatus')->middleware('Admin');
+    Route::get('admin', "AdminController@admin")->name('admin.admin')->middleware('Admin');
+    Route::post('admin/update', "AdminController@update")->name('admin.update')->middleware('Admin');
+    Route::post('admin/store', "AdminController@store")->name('admin.store')->middleware('Admin');
 
     Route::get('layanan-unggulan', "AdminController@layananUnggulan")->name('admin.layananUnggulan')->middleware('Admin');
     Route::post('layanan-unggulan/store', "LayananController@store")->name('admin.layananUnggulan.store')->middleware('Admin');
