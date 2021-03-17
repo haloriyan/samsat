@@ -91,9 +91,10 @@
 </div>
 
 <div class="slider mt-3">
-    <div class="item" bg-image="{{ asset('images/surabaya.jpg') }}"></div>
-    <div class="item" bg-image="{{ asset('images/sutra-go.png') }}"></div>
-    <div class="item" bg-image="{{ asset('images/water.jpg') }}"></div>
+    <a href="{{ route('app.pkbTahunan') }}">
+        <div class="item" bg-image="{{ asset('images/layanan-samsat sutrago.jpg') }}"></div>
+    </a>
+    <div class="item" bg-image="{{ asset('images/payment.jpg') }}"></div>
 </div>
 
 <div class="tiles mt-4">
