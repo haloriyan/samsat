@@ -11,7 +11,7 @@
     <style>
         .logos {
             height: 50px;
-            margin: 0px 15px;
+            margin: 0px 6px;
         }
         .form-group {
             background-color: #ecf0f1;
