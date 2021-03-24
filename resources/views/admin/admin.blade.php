@@ -5,8 +5,11 @@
 @section('content')
 <div class="mb-4">
     <div class="bagi lebar-65">
-        <form action="#">
-            <input type="text" class="box" name="q" placeholder="Cari admin...">
+        <form action="{{ route('admin.admin') }}">
+            <input type="text" class="box" name="q" placeholder="Cari admin..." value="{{ $req->q }}">
+            @if ($req->q != "")
+                <a href="{{ route('admin.admin') }}" id="clearDate"><i class="fas fa-times"></i></a>
+            @endif
         </form>
     </div>
     <div class="bagi lebar-35 rata-kanan">
@@ -39,9 +42,11 @@
                     <span class="pointer bg-hijau rounded p-1 pl-2 pr-2" onclick="edit('{{ $admin }}')">
                         <i class="fas fa-edit"></i>
                     </span>
-                    <a href="#" class="bg-merah rounded p-1 pl-2 pr-2 ml-1">
-                        <i class="fas fa-trash"></i>
-                    </a>
+                    @if ($admin->id != $myData->id)
+                        <a href="#" class="bg-merah rounded p-1 pl-2 pr-2 ml-1">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    @endif
                 </td>
             </tr>
         @endforeach

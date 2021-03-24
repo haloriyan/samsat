@@ -10,7 +10,8 @@ class OtpCode extends Model
     use HasFactory;
 
     protected $fillable = [
-        'company_id','session_id','token','valid_until'
+        'company_id','session_id','token','has_used','valid_until',
+        'action_route','route_value'
     ];
 
     public function company() {

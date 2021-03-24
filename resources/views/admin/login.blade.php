@@ -24,13 +24,6 @@
 @section('content')
     <form action="{{ route('admin.login') }}" method="POST">
         {{ csrf_field() }}
-        @if ($errors->count() != 0)
-            @foreach ($errors->all() as $err)
-                <div class="bg-merah-transparan rounded p-2 mb-2">
-                    {{ $err }}
-                </div>
-            @endforeach
-        @endif
         <div class="form-group">
             <div class="icon">
                 <i class="fas fa-envelope"></i>

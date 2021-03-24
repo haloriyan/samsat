@@ -19,6 +19,9 @@ class CreateOtpCodesTable extends Migration
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->string('session_id');
             $table->string('token');
+            $table->tinyInteger('has_used');
+            $table->string('action_route');
+            $table->string('route_value')->nullable();
             $table->datetime('valid_until');
             $table->timestamps();
         });

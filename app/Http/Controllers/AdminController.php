@@ -59,13 +59,19 @@ class AdminController extends Controller
             'kendaraan' => $kendaraan
         ]);
     }
-    public function admin() {
-        $admins = Admin::all();
+    public function admin(Request $req) {
+        $data = new Admin;
+        if ($req->q != "") {
+            $admins = $data->where('name', 'LIKE', '%'.$req->q.'%')->get();
+        }else {
+            $admins = $data->get();
+        }
         $myData = self::me();
         $message = Session::get('message');
 
         return view('admin.admin', [
             'admins' => $admins,
+            'req' => $req,
             'message' => $message,
             'myData' => $myData
         ]);

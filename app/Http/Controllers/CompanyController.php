@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use App\Mail\SendOTP;
 use App\Models\Company;
 use App\Models\OtpCode;
+use App\Models\ResetPassword;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 
@@ -73,6 +74,7 @@ class CompanyController extends Controller
         return $token;
     }
     public function register(Request $req) {
+        date_default_timezone_set('Asia/Jakarta');
         $saveData = Company::create([
             'name' => $req->name,
             'email' => $req->email,
@@ -90,13 +92,16 @@ class CompanyController extends Controller
             'company_id' => $saveData->id,
             'session_id' => $sessionID,
             'token' => $token,
+            'has_used' => 0,
+            'action_route' => "app.activateAccount",
+            'route_value' => $saveData->id,
             'valid_until' => $validUntil,
         ]);
 
         $saveData->token = $token;
         $sendOTP = Mail::to($req->email)->send(new SendOTP($saveData));
 
-        return redirect()->route('app.registerVerification', $sessionID);
+        return redirect()->route('app.otpAuth', $sessionID);
     }
     public function registerVerification($sessionID) {
         $check = OtpCode::where('session_id', $sessionID)->first();
@@ -111,29 +116,49 @@ class CompanyController extends Controller
             'message' => $message
         ]);
     }
-    public function otpAuth($sessionID, Request $req) {
+    public function otpAuth($sessionID) {
+        date_default_timezone_set('Asia/Jakarta');
+        $data = OtpCode::where('session_id', $sessionID)->first();
+        $dateNow = Carbon::now()->format('Y-m-d H:i:s');
+        if ($data->has_used == 1 || $dateNow > $data->valid_until) {
+            return "Kode OTP sudah tidak berlaku. <a href='".route('app.loginPage')."'>kembali</a>";
+        }
+
+        return view('company.otpAuth', [
+            'data' => $data
+        ]);
+    }
+    public function otpAuthAction($sessionID, Request $req) {
         $token = $req->token;
         $data = OtpCode::where([
             ['session_id', $sessionID],
             ['token', $token]
         ])
-        ->with('company')
-        ->first();
+        ->with('company');
+        
+        $data->update([
+            'has_used' => 1
+        ]);
+
+        $data = $data->first();
 
         if ($data == "") {
-            return redirect()->route('app.registerVerification', $sessionID)->withErrors(["Token salah"]);
+            return redirect()->route('app.otpAuth', $sessionID)->withErrors(["Kode OTP salah"]);
         }
         
         $dateNow = Carbon::now()->format('Y-m-d H:i:s');
         if ($data->valid_until < $dateNow) {
-            return redirect()->route('app.registerVerification', $sessionID)->withErrors(["Token sudah tidak berlaku. Mohon tunggu 10 detik kemudian klik tombol kirim ulang token"]);
+            return redirect()->route('app.otpAuth', $sessionID)->withErrors(["Kode OTP sudah tidak berlaku. Mohon tunggu 10 detik kemudian klik tombol kirim ulang token"]);
         }
 
-        $updateStatus = Company::where('id', $data->company->id)->update([
+        return redirect()->route($data->action_route, $data->route_value);
+    }
+    public function activateAccount($companyID) {
+        $updateStatus = Company::where('id', $companyID)->update([
             'is_active' => 1
         ]);
 
-        $loggingIn = Auth::guard('company')->loginUsingId($data->company_id);
+        $login = Auth::guard('company')->loginUsingId($companyID);
 
         return redirect()->route('app.index');
     }
@@ -295,6 +320,62 @@ class CompanyController extends Controller
         return view('company.layananUnggulan', [
             'datas' => $datas,
             'req' => $req
+        ]);
+    }
+    public function forgotPassword() {
+        $message = Session::get('message');
+
+        return view('company.forgotPassword', [
+            'message' => $message
+        ]);
+    }
+    public function forgotPasswordAction(Request $req) {
+        date_default_timezone_set('Asia/Jakarta');
+        $email = $req->email;
+        $check = self::get([
+            ['email', $email]
+        ])->get();
+        
+        if ($check->count() != 1) {
+            return redirect()->route('app.forgotPassword')->withErrors(['Maaf, email yang Anda masukkan belum terdaftar']);
+        }
+
+        $company = $check[0];
+        $token = self::generateToken();
+        $sessionID = self::generateRandomString(10);
+        $expireOn = Carbon::now()->addMinutes(30)->format('Y-m-d H:i:s');
+        
+        $generateOTP = OtpCode::create([
+            'company_id' => $company->id,
+            'session_id' => $sessionID,
+            'token' => $token,
+            'has_used' => 0,
+            'action_route' => "app.resetPassword",
+            'route_value' => $company->id,
+            'valid_until' => $expireOn,
+        ]);
+
+        $company->token = $token;
+        $sendOTP = Mail::to($req->email)->send(new SendOTP($company));
+
+        return redirect()->route('app.otpAuth', $sessionID);
+    }
+    public function resetPassword($companyID) {
+
+        return view('company.resetPassword', [
+            'companyID' => $companyID
+        ]);
+    }
+    public function resetPasswordAction($companyID, Request $req) {
+        $company = Company::where('id', $companyID)->first();
+        $updatePassword = self::get([
+            ['id', $company->id]
+        ])->update([
+            'password' => bcrypt($req->password)
+        ]);
+
+        return redirect()->route('app.loginPage')->with([
+            'message' => "Password berhasil diatur ulang. Silahkan login dengan password baru"
         ]);
     }
 }

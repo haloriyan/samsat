@@ -40,6 +40,7 @@ body {
     font-family: Roboto;
 }
 .transparan { opacity: 0.01; }
+.opacity-05 { opacity: 0.5; }
 .wrap { margin: 5%; }
 .wrap.super { margin: 10%; }
 .wrap.small { margin: 2.5%; }

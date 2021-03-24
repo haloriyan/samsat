@@ -42,7 +42,7 @@ nav.menu.active {
  }
 nav.menu::-webkit-scrollbar {
     background-color: #eee;
-    width: 6px;
+    width: 5px;
 }
 nav.menu::-webkit-scrollbar-thumb {
     background-color: #aaa;

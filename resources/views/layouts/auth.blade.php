@@ -57,11 +57,28 @@
         <img class="logos" src="{{ asset('images/jasaraharja.png') }}">
     </div>
     <div class="logo-sutra tinggi-80 mt-3 mb-4" bg-image="{{ asset('images/sutra-go.png') }}"></div>
+    @if ($errors->count() != 0)
+        @foreach ($errors->all() as $err)
+            <div class="bg-merah-transparan rounded p-2 mb-2">
+                {{ $err }}
+            </div>
+        @endforeach
+    @endif
+    @isset($message)
+        <div class="bg-hijau-transparan rounded p-2 mb-2">
+            {{ $message }}
+        </div>
+    @endisset
     @yield('content')
     <div class="tinggi-70"></div>
 </div>
 
 <script src="{{ asset('js/base.js') }}"></script>
+<script>
+    const clickBtn = btn => {
+        btn.innerHTML = "<i class='fas fa-spinner'></i> memproses..."
+    }
+</script>
 @yield('javascript')
 
 </body>

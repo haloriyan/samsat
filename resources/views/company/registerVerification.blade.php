@@ -3,20 +3,8 @@
 @section('title', "Verifikasi Pendaftaran")
 
 @section('content')
-    <form action="{{ route('app.otpAuth', $sessionID) }}" method="POST">
+    <form action="{{ route('app.otpAuth.action', $sessionID) }}" method="POST">
         {{ csrf_field() }}
-        @if ($errors->count() != 0)
-            @foreach ($errors->all() as $err)
-                <div class="bg-merah-transparan rounded p-2">
-                    {{ $err }}
-                </div>
-            @endforeach
-        @endif
-        @if ($message != "")
-            <div class="bg-hijau-transparan rounded p-2">
-                {{ $message }}
-            </div>
-        @endif
         <p class="teks-transparan">
             Mohon masukkan token verifikasi yang sudah dikirim ke email Anda
         </p>

@@ -124,7 +124,7 @@
     <div class="popup">
         <div class="wrap">
             <h3>Edit Data Layanan
-                <i class="fas fa-times ke-kanan pointer" onclick="hilangPopup('#addLayanan')"></i>
+                <i class="fas fa-times ke-kanan pointer" onclick="hilangPopup('#editLayanan')"></i>
             </h3>
             <form action="{{ route('admin.layananUnggulan.update') }}" method="POST" enctype="multipart/form-data">
                 {{ csrf_field() }}

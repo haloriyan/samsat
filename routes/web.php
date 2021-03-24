@@ -11,10 +11,16 @@ Route::group(['prefix' => "app"], function() {
     Route::post('login', "CompanyController@login")->name('app.login');
     Route::get('register', "CompanyController@registerPage")->name('app.registerPage');
     Route::get('register-verification/{sessionID}', "CompanyController@registerVerification")->name('app.registerVerification');
-    Route::post('otp-auth/{sessionID}', "CompanyController@otpAuth")->name('app.otpAuth');
+    Route::get('otp-auth/{sessionID}', "CompanyController@otpAuth")->name('app.otpAuth');
+    Route::post('otp-auth/{sessionID}', "CompanyController@otpAuthAction")->name('app.otpAuth.action');
     Route::get('resend-token/{sessionID}', "CompanyController@resendToken")->name('app.resendToken');
+    Route::get('activate-account/{companyID}', "CompanyController@activateAccount")->name("app.activateAccount");
     Route::post('register', "CompanyController@register")->name('app.register');
     Route::get('logout', "CompanyController@logout")->name('app.logout');
+    Route::get('forgot-password', "CompanyController@forgotPassword")->name('app.forgotPassword');
+    Route::post('forgot-password/action', "CompanyController@forgotPasswordAction")->name('app.forgotPassword.action');
+    Route::get('reset-password/{companyID}', "CompanyController@resetPassword")->name('app.resetPassword');
+    Route::post('reset-password/{companyID}/action', "CompanyController@resetPasswordAction")->name('app.resetPassword.action');
     
     Route::get('/', "CompanyController@index")->name('app.index')->middleware('Company');
     Route::get('profile', "CompanyController@profile")->name('app.profile')->middleware('Company');

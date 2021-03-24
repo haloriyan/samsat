@@ -50,12 +50,7 @@
             </a>
         </div>
     </form>
-@endsection
-
-@section('javascript')
-<script>
-    const clickBtn = btn => {
-        btn.innerHTML = "<i class='fas fa-spinner'></i> memproses..."
-    }
-</script>
+    <div class="mt-3 rata-tengah">
+        <a href="{{ route('app.forgotPassword') }}">lupa kata sandi?</a>
+    </div>
 @endsection
