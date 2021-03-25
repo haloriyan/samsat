@@ -88,6 +88,13 @@ class AdminController extends Controller
             'message' => "Admin baru berhasil ditambahkan"
         ]);
     }
+    public function delete($id) {
+        $deleteData = Admin::where('id', $id)->delete();
+        
+        return redirect()->route('admin.admin')->with([
+            'message' => "Seorang admin berhasil dihapus"
+        ]);
+    }
     public function update(Request $req) {
         $id = $req->id;
 

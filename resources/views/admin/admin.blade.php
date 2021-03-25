@@ -43,7 +43,7 @@
                         <i class="fas fa-edit"></i>
                     </span>
                     @if ($admin->id != $myData->id)
-                        <a href="#" class="bg-merah rounded p-1 pl-2 pr-2 ml-1">
+                        <a href="{{ route('admin.delete', $admin->id) }}" onclick="return confirm('Yakin ingin menghapus admin ini?')" class="bg-merah rounded p-1 pl-2 pr-2 ml-1">
                             <i class="fas fa-trash"></i>
                         </a>
                     @endif
