@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+Route::get('/', "UserController@index")->name("page.index");
+
 Route::get('admin', function () {
     return redirect()->route('admin.loginPage');
 });
