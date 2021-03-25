@@ -113,11 +113,16 @@ class AdminController extends Controller
             'message' => "Data admin berhasil diubah"
         ]);
     }
-    public function companies() {
-        $companies = CompanyController::get()->get();
+    public function companies(Request $req) {
+        $toSearch = [];
+        if ($req->q != "") {
+            $toSearch[] = ['name', 'LIKE', "%".$req->q."%"];
+        }
+        $companies = CompanyController::get($toSearch)->get();
 
         return view('admin.companies', [
-            'companies' => $companies
+            'companies' => $companies,
+            'req' => $req,
         ]);
     }
     public function generateFileName($context, $startDate = NULL, $endDate = NULL) {

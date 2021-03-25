@@ -11,7 +11,23 @@
 @endsection
 
 @section('content')
-<table>
+<form action="{{ route('admin.companies') }}">
+    <div class="bagi lebar-70">
+        Cari Perusahaan :
+        <input type="text" class="box" name="q" value="{{ $req->q }}">
+        @if ($req->q != "")
+            <a href="{{ route('admin.companies') }}">
+                <span id="clearDate"><i class="fas fa-times"></i></span>
+            </a>
+        @endif
+    </div>
+    <div class="bagi lebar-5"></div>
+    <div class="bagi lebar-25">
+        <button class="biru mt-2">Cari</button>
+    </div>
+</form>
+
+<table class="mt-4">
     <thead>
         <tr>
             <th>Nama Perusahaan</th>

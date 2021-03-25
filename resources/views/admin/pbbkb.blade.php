@@ -11,6 +11,11 @@
     <form action="{{ route('admin.pbbkb') }}">
         <div class="mt-2">Cari berdasarkan perusahaan :</div>
         <input type="text" class="box" name="company" placeholder="Nama perusahaan" value="{{ $req->company }}">
+        @if ($req->company != "")
+            <a href="{{ route('admin.pbbkb') }}">
+                <span id="clearDate"><i class="fas fa-times"></i></span>
+            </a>
+        @endif
     </form>
 </div>
 <div class="bagi lebar-20"></div>
