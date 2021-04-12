@@ -124,7 +124,7 @@
             </a>
         </div>
     </div>
-    <div class="bagi bagi-2 services rata-tengah">
+    {{-- <div class="bagi bagi-2 services rata-tengah">
         <div class="wrap">
             <a href="{{ route('app.pkbTahunan') }}">
                 <div class="bg-biru item rounded smallPadding">
@@ -135,7 +135,7 @@
                 </div>
             </a>
         </div>
-    </div>
+    </div> --}}
     <div class="bagi bagi-2 services rata-tengah">
         <div class="wrap">
             <a href="{{ route('app.rju') }}">
@@ -175,16 +175,12 @@
             </a>
         </div>
     </div>
-    <div class="services special rata-tengah mt-2">
+    <div class="bagi bagi-2 rata-tengah mt-2">
         <a href="{{ route('app.layananUnggulan') }}">
-            <div class="bayangan-5 item rounded smallPadding info">
-                <div class="wrap super">
-                    <div class="bagi lebar-30">
-                        <i class="fas fa-info"></i>
-                    </div>
-                    <div class="bagi lebar-70">
-                        <h3 class="teks-merah">Info Lainnya</h3>
-                    </div>
+            <div class="bayangan-5 item rounded smallPadding info pt-3 pb-3">
+                <div class="wrap super rata-tengah">
+                    <i class="fas fa-info"></i>
+                    <h3 class="teks-merah">Info Lainnya</h3>
                 </div>
             </div>
         </a>

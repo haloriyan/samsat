@@ -60,12 +60,12 @@
                 <div class="text">Laporan Status Kendaraan</div>
             </li>
         </a>
-        <a href="{{ route('admin.pkb') }}">
+        {{-- <a href="{{ route('admin.pkb') }}">
             <li class="{{ Route::currentRouteName() == 'admin.pkb' ? 'active' : '' }}">
                 <div class="icon"><i class="fas fa-calendar"></i></div>
                 <div class="text">Pembayaran PKB Tahunan</div>
             </li>
-        </a>
+        </a> --}}
         <a href="{{ route('admin.rju') }}">
             <li class="{{ Route::currentRouteName() == 'admin.rju' ? 'active' : '' }}">
                 <div class="icon"><i class="fas fa-tags"></i></div>
