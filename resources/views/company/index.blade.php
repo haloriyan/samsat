@@ -37,12 +37,12 @@
         overflow-x: scroll;
         overflow-y: hidden;
         white-space: nowrap;
-        height: 170px;
+        height: 180px;
     }
     .slider .item {
         width: 90%;
         margin-right: 2.5%;
-        height: 170px;
+        height: 180px;
         display: inline-block;
         vertical-align: top;
         border-radius: 6px;
@@ -92,8 +92,9 @@
 
 <div class="slider mt-3">
     <a href="{{ route('app.pkbTahunan') }}">
-        <div class="item" bg-image="{{ asset('images/layanan-samsat sutrago.jpg') }}"></div>
-    </a>
+        <div class="item" bg-image="{{ asset('images/slider.jpg') }}"></div>
+	</a>
+	<div class="item" bg-image="{{ asset('images/slider-2.jpg') }}"></div>
     <div class="item" bg-image="{{ asset('images/payment.jpg') }}"></div>
 </div>
 
