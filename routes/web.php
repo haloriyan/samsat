@@ -57,6 +57,7 @@ Route::group(['prefix' => "admin"], function() {
 
     Route::get('dashboard', "AdminController@dashboard")->name('admin.dashboard')->middleware('Admin');
     Route::get('companies', "AdminController@companies")->name('admin.companies')->middleware('Admin');
+    Route::get('companies/{id}/delete', "CompanyController@delete")->name('admin.company.delete')->middleware('Admin');
     Route::get('pkb', "AdminController@pkb")->name('admin.pkb')->middleware('Admin');
     Route::get('rju', "AdminController@rju")->name('admin.rju')->middleware('Admin');
     Route::get('pap', "AdminController@pap")->name('admin.pap')->middleware('Admin');

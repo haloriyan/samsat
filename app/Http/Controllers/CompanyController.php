@@ -378,4 +378,11 @@ class CompanyController extends Controller
             'message' => "Password berhasil diatur ulang. Silahkan login dengan password baru"
         ]);
     }
+    public function delete($id) {
+        $deleteData = Company::where('id', $id)->delete();
+
+        return redirect()->route('admin.companies')->with([
+            'message' => "Perusahaan berhasil dihapus"
+        ]);
+    }
 }

@@ -27,13 +27,19 @@
     </div>
 </form>
 
+@if ($message != "")
+    <div class="bg-hijau-transparan rounded p-2 lebar-100">
+        {{ $message }}
+    </div>
+@endif
+
 <table class="mt-4">
     <thead>
         <tr>
             <th>Nama Perusahaan</th>
             <th>No. WhatsApp</th>
             <th>Alamat</th>
-            <th></th>
+            <th class="lebar-40"></th>
         </tr>
     </thead>
     <tbody>
@@ -46,6 +52,9 @@
                     <span class="bg-biru rounded p-1 pl-2 pr-2 pointer" onclick="checkData('{{ $company->name }}')">
                         Lihat Data
                     </span>
+                    <a href="{{ route('admin.company.delete', $company->id) }}" class="bg-merah rounded ml-1 p-1 pl-2 pr-2 pointer" onclick="return confirm(`Yakin ingin menghapus perusahaan ${this.getAttribute('company-name')} beserta semua data yang terkait?`)" company-name="{{ $company->name }}">
+                        <i class="fas fa-trash mr-1"></i> Hapus Perusahaan
+                    </a>
                 </td>
             </tr>
         @endforeach

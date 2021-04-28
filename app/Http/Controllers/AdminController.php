@@ -119,9 +119,11 @@ class AdminController extends Controller
             $toSearch[] = ['name', 'LIKE', "%".$req->q."%"];
         }
         $companies = CompanyController::get($toSearch)->get();
+        $message = Session::get('message');
 
         return view('admin.companies', [
             'companies' => $companies,
+            'message' => $message,
             'req' => $req,
         ]);
     }
