@@ -35,6 +35,14 @@ const bindDivWithImage = () => {
 }
 bindDivWithImage()
 
+const escapeJson = str => {
+    return str.replace(/\n/g, "\\n")
+    .replace(/\r/g, "\\r")
+    .replace(/\t/g, "\\t")
+    .replace(/\f/g, "\\f");
+}
+    
+
 // alert
 let alerts = selectAll('.alert .ke-kanan')
 alerts.forEach(alert => {

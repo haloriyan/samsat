@@ -175,6 +175,7 @@ select.box:focus {
 .bayangan-1 { box-shadow: 1px 1px 1px 1px #ddd; }
 
 .rounded { border-radius: 5px; }
+.rounded-more { border-radius: 10px; }
 .rounded-circle { border-radius: 999px; }
 .corner-top-left { border-top-left-radius: 6px; }
 .corner-top-right { border-top-right-radius: 6px; }
@@ -446,6 +447,7 @@ table td form { display: inline-block; }
 .tinggi-250 { height: 250px; }
 .tinggi-200 { height: 200px; }
 .tinggi-150 { height: 150px; }
+.tinggi-110 { height: 110px; }
 .tinggi-100 { height: 100px; }
 .tinggi-95 { height: 95px; }
 .tinggi-90 { height: 90px; }

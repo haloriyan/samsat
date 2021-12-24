@@ -190,6 +190,7 @@ class CompanyController extends Controller
     public function index() {
         $myData = self::me();
         $myData->first_name = $this->processName($myData->name)[0];
+        $payments = PaymentController::get()->get();
         
         $message = Session::get('message');
 
@@ -200,6 +201,7 @@ class CompanyController extends Controller
 
         return view('company.index', [
             'myData' => $myData,
+            'payments' => $payments,
             'notifications' => $notifications,
             'message' => $message
         ]);
@@ -383,6 +385,12 @@ class CompanyController extends Controller
 
         return redirect()->route('admin.companies')->with([
             'message' => "Perusahaan berhasil dihapus"
+        ]);
+    }
+    public function payment($id) {
+        $payment = PaymentController::get([['id', $id]])->first();
+        return view('company.payment', [
+            'payment' => $payment
         ]);
     }
 }

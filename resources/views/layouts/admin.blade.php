@@ -84,6 +84,12 @@
                 <div class="text">Pajak Bahan Bakar</div>
             </li>
         </a>
+        <a href="{{ route('admin.payment') }}">
+            <li class="{{ Route::currentRouteName() == 'admin.payment' ? 'active' : '' }}">
+                <div class="icon"><i class="fas fa-money-bill-alt"></i></div>
+                <div class="text">Informasi Pembayaran</div>
+            </li>
+        </a>
         <a href="{{ route('admin.admin') }}">
             <li class="{{ Route::currentRouteName() == 'admin.admin' ? 'active' : '' }}">
                 <div class="icon"><i class="fas fa-users"></i></div>

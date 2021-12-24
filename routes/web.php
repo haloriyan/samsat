@@ -48,6 +48,9 @@ Route::group(['prefix' => "app"], function() {
 
     Route::get('layanan-unggulan', "CompanyController@layananUnggulan")->name('app.layananUnggulan')->middleware('Company');
     Route::get('layanan-unggulan/{id}/detail', "LayananController@detail")->name('app.layananUnggulan.detail')->middleware('Company');
+
+    Route::get('payment', "CompanyController@payment")->name('app.payment')->middleware('Company');
+    Route::get('payment/{id}', "CompanyController@payment")->name('app.payment.detail')->middleware('Company');
 });
 
 Route::group(['prefix' => "admin"], function() {
@@ -75,4 +78,11 @@ Route::group(['prefix' => "admin"], function() {
     Route::post('layanan-unggulan/store', "LayananController@store")->name('admin.layananUnggulan.store')->middleware('Admin');
     Route::post('layanan-unggulan/update', "LayananController@update")->name('admin.layananUnggulan.update')->middleware('Admin');
     Route::get('layanan-unggulan/{delete}', "LayananController@delete")->name('admin.layananUnggulan.delete')->middleware('Admin');
+
+    Route::group(['prefix' => "payment"], function () {
+        Route::post('store', "PaymentController@store")->name('admin.payment.store')->middleware('Admin');
+        Route::post('update', "PaymentController@update")->name('admin.payment.update')->middleware('Admin');
+        Route::post('delete', "PaymentController@delete")->name('admin.payment.delete')->middleware('Admin');
+        Route::get('/', "AdminController@payment")->name('admin.payment')->middleware('Admin');
+    });
 });

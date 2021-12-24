@@ -384,4 +384,13 @@ class AdminController extends Controller
             'req' => $req
         ]);
     }
+    public function payment() {
+        $message = Session::get('message');
+        $payments = PaymentController::get()->get();
+
+        return view('admin.payment', [
+            'message' => $message,
+            'payments' => $payments
+        ]);
+    }
 }

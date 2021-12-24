@@ -176,6 +176,19 @@
             </a>
         </div>
     </div>
+    {{-- <div class="bagi bagi-2 services rata-tengah">
+        <div class="wrap">
+            <a href="{{ route('app.payment') }}">
+                <div class="bg-biru item rounded smallPadding">
+                    <div class="wrap super">
+                        <div class="icon"><i class="fas fa-money-bill-alt"></i></div>
+                        <h3 class="">Pembayaran</h3>
+                        <p>Informasi Pembayaran</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div> --}}
     <div class="bagi bagi-2 rata-tengah mt-2">
         <a href="{{ route('app.layananUnggulan') }}">
             <div class="bayangan-5 item rounded smallPadding info pt-3 pb-3">
@@ -186,6 +199,25 @@
             </div>
         </a>
     </div>
+
+    @if ($payments->count() != 0)
+        <div class="tinggi-40"></div>
+        <h3>Channel Pembayaran</h3>
+        @foreach ($payments as $payment)
+            <div class="bagi bagi-2">
+                <div class="wrap">
+                    <a href="{{ route('app.payment.detail', $payment->id) }}">
+                        <div class="bg-putih rounded bayangan-5 smallPadding mb-3">
+                            <div class="wrap">
+                                <div class="tinggi-45 mb-3 rounded" bg-image="{{ asset('storage/payment_image/'.$payment->image) }}"></div>
+                                <h4 class="m-0 mb-1 rata-tengah">{{ $payment->title }}</h4>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        @endforeach
+    @endif
 </div>
 
 <div class="bg"></div>
