@@ -97,7 +97,9 @@
         select("#detail #status").innerText = data.status;
         select("#detail #keteranganArea").innerHTML = "";
 
-        if (data.status != "Jual") {
+        if (data.status == "Jual" || data.status == "Dimiliki") {
+            select("#detail #keteranganArea").innerText = data.keterangan;
+        } else {
             createElement({
                 el: 'div',
                 attributes: [
@@ -107,8 +109,6 @@
                 createTo: "#detail #keteranganArea"
             });
             bindDivWithImage();
-        }else {
-            select("#detail #keteranganArea").innerText = data.keterangan;
         }
     }
 </script>

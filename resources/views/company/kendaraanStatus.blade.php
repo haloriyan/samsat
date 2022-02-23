@@ -33,6 +33,7 @@
             <option>Jual</option>
             <option>Rusak</option>
             <option>Hilang</option>
+            <option>Dimiliki</option>
         </select>
 
         <div id="keteranganArea">
@@ -80,17 +81,12 @@
         select("#captureButton").classList.add('d-none');
     }
 
-    document.addEventListener("keydown", e => {
-        if (e.key == "f") {
-            capture();
-        }
-    });
-
     const changeStatus = status => {
         select("#keteranganArea").innerHTML = "";
         let toCreate = "init";
-        if (status == "Jual") {
-            toCreate = `<div class="mt-2">Info Pembeli :</div>
+        if (status == "Jual" || status == "Dimiliki") {
+            let subject = status == "Jual" ? "Pembeli" : "Pemilik";
+            toCreate = `<div class="mt-2">Info ${subject} :</div>
 <textarea class="box" name="keterangan" required></textarea>`;
         }else {
             toCreate = `<div class="mt-2">Foto :</div>

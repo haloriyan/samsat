@@ -18,15 +18,15 @@ class KendaraanStatusController extends Controller
         $status = $req->status;
         $myData = CompanyController::me();
 
-        if ($status != "Jual") {
+        if ($status == "Jual" || $status == "Dimiliki") {
+            $keterangan = $req->keterangan;
+        } else {
             $img = $req->keterangan;
             $img = str_replace("data:image/png;base64,", "", $img);
             $img = str_replace(" ", "+", $img);
             $data = base64_decode($img);
             $keterangan = time()."_".rand(1, 99999).".png";
             $store = Storage::put("public/keterangan_status/".$keterangan, $data);
-        }else {
-            $keterangan = $req->keterangan;
         }
 
         $saveData = KendaraanStatus::create([
